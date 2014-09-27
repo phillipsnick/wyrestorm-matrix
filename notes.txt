@@ -1,0 +1,101 @@
+Few notes on the communication protocol between device and pc.
+
+
+
+Changing input
+
+Command: 'cir ##'
+
+First # to contain output number, starts from 0 (eg range is 0-7)
+Second # to contain input number, starts from 0
+
+Example: cir 00
+Response: s11 
+
+Meaning output 1 is now set to input 1
+
+
+
+
+
+All output states
+
+Command: 'bc '
+Note the space is important
+
+Response would be along the lines of:
+s11
+s22
+s33
+s44
+s55
+s66
+s77
+s88
+
+
+
+
+
+System mode
+
+Command: stm
+Response: stm
+
+Notes: this auto closes after 60 seconds, the 'sto' command will be sent from the device
+
+You may also close this system mode by sending 'sto'. Should receive 'sto' as a confirmation also.
+
+
+
+
+System status
+
+Command: sts
+
+
+
+
+
+EDID copy
+
+Looks like you may need to be in settings mode using 'stm' command.
+
+Command: sed output# input#
+
+Eg set output 1's EDID to input 1
+
+sed 0 0
+
+Success response:
+sed 00 00
+
+Error response: nothing
+
+
+
+
+
+
+IR Matrix
+
+status command ims
+
+
+set a different matrix pos
+srp 1 6 (eg output 2 inpiut 7)
+
+
+
+
+
+
+Read EDID
+
+
+
+edo
+edm
+swe 0 1
+
+red 0
