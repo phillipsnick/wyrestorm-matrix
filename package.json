@@ -1,0 +1,26 @@
+{
+  "name": "wyrestorm-mx0808",
+  "version": "0.0.1",
+  "description": "Module for two way communication with Wyrestorm HDMI matrix",
+  "main": "./lib/apc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phillipsnick/wyrestorm-mx0808.git"
+  },
+  "keywords": [
+    "wyrestorm",
+    "grandbeing",
+    "matrix",
+    "hdmi",
+    "mx0808",
+    "telnet"
+  ],
+  "author": "Nick Phillips <nick@linkstudios.co.uk>",
+  "license": "MIT",
+  "dependencies": {
+    "telnet-client": "https://github.com/phillipsnick/node-telnet-client/archive/v0.1.1.tar.gz"
+  }
+}
