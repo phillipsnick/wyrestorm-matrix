@@ -1,6 +1,6 @@
-# Wyrestorm HDMI Matrix MX0808
+# Wyrestorm HDMI Matrix
 
-Node module for controlling Wyrestorm MX0808 HDMI matrix via IP or RS232.
+Node module for controlling a Wyrestorm HDMI matrix via IP or RS232.
 
 ## Installation
 
@@ -12,9 +12,32 @@ npm install wyrestorm-mx0808
 
 ### Via Telnet
 
+The telnet transport needs to be passed onto the module.
+
+```javascript
+var wyrestorm = require('wyrestorm-matrix');
+
+var matrix = new wyrestorm({
+  inputs: 8,
+  outputs: 8,
+  transport: new wyrestorm.transports.telnet({
+    host: '' // IP Address or hostname
+  })
+});
+
+matrix.on('connect', function() {
+  // now connected
+  // all commands to be placed here
+});
+```
+
 ### Via RS232
 
+__TODO__
+
 ## Methods
+
+A number of examples can be found within the [examples directory](https://github.com/phillipsnick/wyrestorm-matrix/tree/master/examples).
 
 ## Notes
 
@@ -24,4 +47,4 @@ The commands used by this module have been reverse engineered from the [COMCTL S
 
 ## Licence
 
-[The MIT License (MIT)](https://github.com/phillipsnick/wyrestorm-mx0808/blob/master/LICENSE)
+[The MIT License (MIT)](https://github.com/phillipsnick/wyrestorm-matrix/blob/master/LICENSE)

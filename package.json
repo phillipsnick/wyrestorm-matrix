@@ -1,14 +1,14 @@
 {
-  "name": "wyrestorm-mx0808",
+  "name": "wyrestorm-matrix",
   "version": "0.0.1",
-  "description": "Module for two way communication with Wyrestorm HDMI matrix",
+  "description": "Module for two way communication with a Wyrestorm HDMI matrix",
   "main": "./lib/apc.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/phillipsnick/wyrestorm-mx0808.git"
+    "url": "https://github.com/phillipsnick/wyrestorm-matrix.git"
   },
   "keywords": [
     "wyrestorm",
