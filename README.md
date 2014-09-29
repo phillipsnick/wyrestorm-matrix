@@ -10,6 +10,12 @@ npm install wyrestorm-mx0808
 
 ## Usage
 
+When creating an instance of the matrix module there are three required parameters.
+ 
+* `inputs` - Total number of inputs on the matrix
+* `outputs` - Total number of outputs on the matrix
+* `transport` - Instance of your chosen transport (eg Telnet or RS232) 
+
 ### Via Telnet
 
 The telnet transport needs to be passed onto the module.
@@ -38,6 +44,162 @@ __TODO__
 ## Methods
 
 A number of examples can be found within the [examples directory](https://github.com/phillipsnick/wyrestorm-matrix/tree/master/examples).
+
+### getStatus(callback)
+
+Get the current status of selected inputs/outputs.
+
+__Arguments__
+
+* `callback(err, response)` - Callback on completion, `response` to contain object of all outputs and corresponding selected inputs.
+
+__Example__
+
+```javascript
+
+```
+
+---------------------------------------
+
+### setOutput(output, input, callback)
+
+Change the selected input for a specific output
+
+__Arguments__
+
+* `output` - Output display as an int (eg 1 for output 1)
+* `input` - Input source as an int (eg 5 for input 5)
+* `callback(err)` - Optional callback on completion
+
+__Example__
+
+```javascript
+
+```
+
+### enterSystemMode(callback)
+
+Put the matrix into system mode.
+
+Note, this is required when setting the EDID for example.
+
+__Arguments__
+
+* `callback(err)` - Optional callback on completion
+
+__Example__
+
+```javascript
+
+```
+
+### leaveSystemMode(callback)
+
+Take the matrix out of system mode.
+
+__Arguments__
+
+* `callback(err)` - Optional callback on completion
+
+__Example__
+
+```javascript
+
+```
+
+### getSystemStatus(callback)
+
+Get the system configuration settings.
+
+Note this could do with some improvements.
+
+__Arguments__
+
+* `callback(err)` - Callback with parsed configuration details
+
+__Example__
+
+```javascript
+
+```
+
+### copyEdid(output, input, callback)
+
+Copy a displays EDID to a specific input.
+
+__Arguments__
+
+* `output` - Output int to copy the EDID from
+* `input` - Input int to copy the EDID to
+* `callback(err)` - Optional callback on completion
+
+__Example__
+
+```javascript
+
+```
+
+### getIrStatus(callback)
+
+Get the IR matrix current input/output configuration
+
+### setIrOutput(output, input, callback)
+
+Change the IR matrix input/output configuration
+
+### getEdid(output, callback)
+
+Get the EDID of a specific output display
+
+### isValidOutput(output)
+
+Is the provided output int a valid output based on the total outputs passed in configuration.
+
+__Arguments__
+
+* `output` - Output integer
+
+__Examples__
+
+```javascript
+
+```
+
+### isValidInput(input)
+
+Is the provided input int a valid input based on the total inputs passed in configuration.
+
+__Arguments__
+
+* `input` - Input integer
+
+__Examples__
+
+```javascript
+
+```
+
+### getTransport()
+
+Get the transport object provided when creating the module.
+
+__Example__
+
+```js
+var transport = matrix.getTransport();
+```
+
+---------------------------------------
+
+### getConnection()
+
+Get the connection created by the transport.
+
+__Example__
+
+```js
+var connection = matrix.getConnection();
+```
 
 ## Notes
 
