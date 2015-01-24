@@ -11,13 +11,24 @@ matrix.connect();
 matrix.on('connect', function() {
   console.log('Connected');
 
-  matrix.getStatus(function(err, res) {
+  matrix.enterSystemMode(function(err) {
     if (err) {
       console.log(err.toString());
       return;
     }
 
-    console.log("Matrix port status", res);
+    console.log("Now in system mode, will leave in 5 seconds");
+
+    setTimeout(function() {
+      matrix.leaveSystemMode(function(err) {
+        if(err) {
+          console.log(err.toString());
+          return;
+        }
+
+        console.log("Now left system mode");
+      });
+    }, 5000);
   });
 });
 
@@ -28,7 +39,7 @@ matrix.on('disconnect', function() {
 setTimeout(function() {
   matrix.disconnect();
   process.exit(0);
-}, 2000);
+}, 7000);
 
 process.on('SIGINT', function() {
   console.log("Caught interrupt signal");

@@ -11,13 +11,13 @@ matrix.connect();
 matrix.on('connect', function() {
   console.log('Connected');
 
-  matrix.getStatus(function(err, res) {
+  matrix.getSystemStatus(function(err, res) {
     if (err) {
       console.log(err.toString());
       return;
     }
 
-    console.log("Matrix port status", res);
+    console.log("Matrix status", res);
   });
 });
 

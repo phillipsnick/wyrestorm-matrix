@@ -11,13 +11,13 @@ matrix.connect();
 matrix.on('connect', function() {
   console.log('Connected');
 
-  matrix.getStatus(function(err, res) {
+  matrix.setOutputAndEdid(1, 1, function(err) {
     if (err) {
       console.log(err.toString());
       return;
     }
 
-    console.log("Matrix port status", res);
+    console.log("Matrix set output 1 to input 1 with EDID copy");
   });
 });
 
@@ -28,7 +28,7 @@ matrix.on('disconnect', function() {
 setTimeout(function() {
   matrix.disconnect();
   process.exit(0);
-}, 2000);
+}, 8000);
 
 process.on('SIGINT', function() {
   console.log("Caught interrupt signal");

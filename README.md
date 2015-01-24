@@ -1,11 +1,14 @@
 # Wyrestorm HDMI Matrix
 
-Node module for controlling a Wyrestorm HDMI matrix via IP or RS232.
+NodeJS module for controlling a Wyrestorm HDMI matrix via IP or RS232.
+
+For my notes on reverse engineering the API see my [notes](https://github.com/phillipsnick/wyrestorm-matrix/tree/master/docs/API.md).
+
 
 ## Installation
 
 ```bash
-npm install wyrestorm-mx0808
+npm install wyrestorm-matrix
 ```
 
 ## Usage
@@ -16,11 +19,14 @@ When creating an instance of the matrix module there are three required paramete
 * `outputs` - Total number of outputs on the matrix
 * `transport` - Instance of your chosen transport (eg Telnet or RS232) 
 
+
 ### Via Telnet
 
 The telnet transport needs to be passed onto the module.
 
-```javascript
+Note from what I am aware the matrix will only be accessible within a /24 subnet.
+
+```js
 var wyrestorm = require('wyrestorm-matrix');
 
 var matrix = new wyrestorm({
@@ -39,11 +45,13 @@ matrix.on('connect', function() {
 
 ### Via RS232
 
-__TODO__
+__TODO__ see #2
+
 
 ## Methods
 
 A number of examples can be found within the [examples directory](https://github.com/phillipsnick/wyrestorm-matrix/tree/master/examples).
+
 
 ### getStatus(callback)
 
@@ -55,8 +63,15 @@ __Arguments__
 
 __Example__
 
-```javascript
+```js
+matrix.getStatus(function(err, res) {
+  if (err) {
+    console.log(err.toString());
+    return;
+  }
 
+  console.log("Matrix port status", res);
+});
 ```
 
 ---------------------------------------
@@ -73,15 +88,26 @@ __Arguments__
 
 __Example__
 
-```javascript
+Set output 3 to input 3
 
+```js
+matrix.setOutput(3, 3, function(err) {
+  if (err) {
+    console.log(err.toString());
+    return;
+  }
+
+  console.log("Matrix set output 2 to 2");
+});
 ```
+
+---------------------------------------
 
 ### enterSystemMode(callback)
 
 Put the matrix into system mode.
 
-Note, this is required when setting the EDID for example.
+Note, you will be automatically kicked out of system mode within 60 seconds by the matrix if no command is sent.
 
 __Arguments__
 
@@ -89,9 +115,18 @@ __Arguments__
 
 __Example__
 
-```javascript
+```js
+matrix.enterSystemMode(function(err) {
+  if (err) {
+    console.log(err.toString());
+    return;
+  }
 
+  console.log("Now in system mode");
+});
 ```
+
+---------------------------------------
 
 ### leaveSystemMode(callback)
 
@@ -103,9 +138,31 @@ __Arguments__
 
 __Example__
 
-```javascript
+Including entering system mode
 
+```js
+matrix.enterSystemMode(function(err) {
+  if (err) {
+    console.log(err.toString());
+    return;
+  }
+
+  console.log("Now in system mode, will leave in 5 seconds");
+
+  setTimeout(function() {
+    matrix.leaveSystemMode(function(err) {
+      if(err) {
+        console.log(err.toString());
+        return;
+      }
+
+      console.log("Now left system mode");
+    });
+  }, 5000);
+});
 ```
+
+---------------------------------------
 
 ### getSystemStatus(callback)
 
@@ -119,9 +176,18 @@ __Arguments__
 
 __Example__
 
-```javascript
+```js
+matrix.getSystemStatus(function(err, res) {
+  if (err) {
+    console.log(err.toString());
+    return;
+  }
 
+  console.log("Matrix status", res);
+});
 ```
+
+---------------------------------------
 
 ### copyEdid(output, input, callback)
 
@@ -135,21 +201,46 @@ __Arguments__
 
 __Example__
 
-```javascript
+Copy output 3's EDID to input 3.
 
+```js
+matrix.enterSystemMode(function() {
+  matrix.copyEdid(3, 3, function(err) {
+    if (err) {
+      console.log(err.toString());
+      return;
+    }
+
+    console.log("Matrix copied output 3's EDID to input 3");
+  });
+});
 ```
+
+---------------------------------------
 
 ### getIrStatus(callback)
 
 Get the IR matrix current input/output configuration
 
+__TODO__
+
+---------------------------------------
+
 ### setIrOutput(output, input, callback)
 
 Change the IR matrix input/output configuration
 
+__TODO__
+
+---------------------------------------
+
 ### getEdid(output, callback)
 
 Get the EDID of a specific output display
+
+__TODO__
+
+---------------------------------------
 
 ### isValidOutput(output)
 
@@ -161,9 +252,17 @@ __Arguments__
 
 __Examples__
 
-```javascript
-
+```js
+console.log(matrix.isValidOutput(4));
+true
 ```
+
+```js
+console.log(matrix.isValidOutput(40));
+false
+```
+
+---------------------------------------
 
 ### isValidInput(input)
 
@@ -175,9 +274,17 @@ __Arguments__
 
 __Examples__
 
-```javascript
-
+```js
+console.log(matrix.isValidInput(4));
+true
 ```
+
+```js
+console.log(matrix.isValidInput(40));
+false
+```
+
+---------------------------------------
 
 ### getTransport()
 
